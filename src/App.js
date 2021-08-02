@@ -1,31 +1,4 @@
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
@@ -34,16 +7,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import { CityList, City } from './CityList';
 
 export default function App() {
 
-  const [count, setCount] = useState(0)
-  const [cityName, setCityName] = useState("")
   const [cities, setCities] = useState([])
-  const [responseJson, setResponseJson] = useState("")
 
   const requestOptions = {
     method: 'POST',
@@ -68,14 +37,7 @@ export default function App() {
         </Nav>
       </Container>
     </Navbar>
-    <CityList cities={cities}/>
-      <p> Cities size: {cities.length}</p>
-      <NameForm/>
-      <Button onClick={() => {fetch('http://localhost:8080/api/cities', requestOptions)
-        .then(response => response.json())
-        .then(data => setResponseJson(data))
-        console.log(responseJson)
-      }}>Bootstrap?</Button>
+    <NameForm/>
     <Router>
       <div>
         {/* A <Switch> looks through its children <Route>s and
@@ -85,7 +47,7 @@ export default function App() {
             <About />
           </Route>
           <Route path="/cities">
-            <Cities />
+          <CityList cities={cities}/>
           </Route>
           <Route path="/">
             <Home />
@@ -105,34 +67,9 @@ function About() {
   return <h2>About</h2>;
 }
 
-function Cities() {
-  return <h2>Cities</h2>;
-}
-
 function testButton() {
   this.setState("value: <h2>Temporary</h2>")
 }
-
-// function CityList(props) {
-//   // I need to have a props array of city objects and then convert them into <tr>'s
-//   // I can use a map function to wind up with what I think is essentially an array of Components
-//   // from my given array of js objects, then I can just jsx that map
-//   // not sure what parent <tags> the map should have though? maybe none?
-
-//   const cities = props.cities.map(city => <City city={city.cityName} silver={city.silver}/>);
-//   //const cities = [<City city="Arkad"/>, <City city="Barthul"/>]
-//   //console.log(props.cities)
-
-//   return (
-//     <Table bordered>
-//     <tr>
-//       <th>City Name</th>
-//       <th>Silver</th>
-//     </tr>
-//     {cities}
-//   </Table>
-//   );
-// }
 
 function NameForm(props) {
   const [value, setValue] = useState('');

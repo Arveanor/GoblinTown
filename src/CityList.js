@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Table from 'react-bootstrap/Table';
 
 
@@ -9,15 +11,16 @@ export function CityList(props) {
   // not sure what parent <tags> the map should have though? maybe none?
 
   const cities = props.cities.map(city => <City city={city.cityName} silver={city.silver}/>);
-  //const cities = [<City city="Arkad"/>, <City city="Barthul"/>]
-  //console.log(props.cities)
 
   return (
     <Table bordered>
-    <tr>
-      <th>City Name</th>
-      <th>Silver</th>
-    </tr>
+        <thead>
+            <tr>
+            <th>City Name</th>
+            <th>Silver</th>
+            <th>Action</th> 
+            </tr>
+        </thead>
     {cities}
   </Table>
   );
@@ -25,9 +28,27 @@ export function CityList(props) {
 
 export function City(props) {
     return (
-      <tr>
-        <td>{props.city}</td>
-        <td>{props.silver}</td>
-      </tr>
+        <tbody>
+        <tr>
+            <td>{props.city}</td>
+            <td>{props.silver}</td>
+            <td>
+                <CityActionDropdown/>   
+            </td>
+        </tr>
+      </tbody>
+    );
+}
+
+export function CityActionDropdown(props)
+{
+    const [dropdownSelection, setDropdownSelection] = useState("Select Action");
+    const handleOnClick = (selection) => setDropdownSelection(selection.target.outerText);
+    return (
+        <DropdownButton id="dropdown-basic-button" title={dropdownSelection}>
+        <Dropdown.Item href="#/action-1" onClick={handleOnClick}>Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2" onClick={handleOnClick}>Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={handleOnClick}>Something else</Dropdown.Item>
+        </DropdownButton>
     );
 }
