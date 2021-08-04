@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
-
+import Button from 'react-bootstrap/Button';
 
 export function CityList(props) {
-  // I need to have a props array of city objects and then convert them into <tr>'s
-  // I can use a map function to wind up with what I think is essentially an array of Components
-  // from my given array of js objects, then I can just jsx that map
-  // not sure what parent <tags> the map should have though? maybe none?
-
-  const cities = props.cities.map(city => <City city={city.cityName} silver={city.silver}/>);
+    const [value, setValue] = useState('');
+    const cities = props.cities.map(city => <City city={city.cityName} silver={city.silver}/>);
 
   return (
+    <div>
     <Table bordered>
         <thead>
             <tr>
@@ -23,6 +19,7 @@ export function CityList(props) {
         </thead>
     {cities}
   </Table>
+  </div>
   );
 }
 
@@ -33,7 +30,7 @@ export function City(props) {
             <td>{props.city}</td>
             <td>{props.silver}</td>
             <td>
-                <CityActionDropdown/>   
+                <CityActionDropdown city={props.city}/>   
             </td>
         </tr>
       </tbody>
@@ -45,10 +42,11 @@ export function CityActionDropdown(props)
     const [dropdownSelection, setDropdownSelection] = useState("Select Action");
     const handleOnClick = (selection) => setDropdownSelection(selection.target.outerText);
     return (
-        <DropdownButton id="dropdown-basic-button" title={dropdownSelection}>
-        <Dropdown.Item href="#/action-1" onClick={handleOnClick}>Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2" onClick={handleOnClick}>Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3" onClick={handleOnClick}>Something else</Dropdown.Item>
-        </DropdownButton>
+        <Form.Select aria-label="Default select example" id = {props.city} onChange = {(event) => console.log(event)}>
+            <option>Open this select menu</option>
+            <option value="1">Build</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </Form.Select>
     );
 }
